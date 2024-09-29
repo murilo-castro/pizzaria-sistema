@@ -2,8 +2,36 @@ import styles from "@/app/page.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import logoImg from "/public/logo.svg";
+import { api } from "@/services/api";
+import { redirect } from "next/navigation";
 
 export default function Signup() {
+  async function handleRegister(formData: FormData) {
+    "use server";
+
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    if (name === "" || email === "" || password === "") {
+      console.log("Preencha todos os camposS");
+
+      return;
+    }
+
+    try {
+      await api.post("/user", {
+        name,
+        email,
+        password,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    redirect("/");
+  }
+
   return (
     <>
       <div className={styles.containerCenter}>
@@ -11,7 +39,7 @@ export default function Signup() {
         <section className={styles.login}>
           <h1>Criar Conta</h1>
 
-          <form>
+          <form action={handleRegister}>
             <input
               type="text"
               required
