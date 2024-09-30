@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
 
   const token = getCookiesServer();
 
-  if (pathname.startsWith("/order-management")) {
+  if (pathname.startsWith("/dashboard")) {
     if (!token) return NextResponse.redirect(new URL("/", req.url));
 
     const isValid = await validateToken(token);

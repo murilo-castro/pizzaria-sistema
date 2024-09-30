@@ -40,7 +40,7 @@ export default function Page() {
       console.log(error);
     }
 
-    redirect("/order-management");
+    redirect("/dashboard");
   }
 
   return (
